@@ -18,7 +18,7 @@ public class TrelloController {
 
     private final TrelloService trelloService;
 
-    @GetMapping(value = "getTrelloBoards")
+    @GetMapping("getTrelloBoards")
     public List<TrelloBoardDto> getTrelloBoards() {
      return trelloService.fetchTrelloBoards();
 
