@@ -3,35 +3,35 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	//id 'war'
-}
-task stage(dependsOn: ['bootJar'])
-
-tasks.stage.doLast() {
-	delete fileTree(dir: "build/distributions")
-	delete fileTree(dir: "build/assetCompile")
-	delete fileTree(dir: "build/distributions")
-	delete fileTree(dir: "build/libs", exclude: "*.jar") //delete everything except jar file inside build folder
-}
-
-jar { //Don't package test folders and files
-	exclude "test/**"
-	exclude "test/**/**"
-}
-
-build.mustRunAfter clean //First clean then build to avoid cache issues etc
-
-gradle.taskGraph.whenReady {
-	taskGraph ->
-		if (taskGraph.hasTask(stage)) { //Don't run test on heroku
-			test.enabled = false
-		}
-}
-
-bootJar { //Exclude test files when pack boot jar file
-	enabled = true
-	classifier = 'boot'
-	exclude "test/**"
-	exclude "test/**/**"
+//}
+//task stage(dependsOn: ['bootJar'])
+//
+//tasks.stage.doLast() {
+//	delete fileTree(dir: "build/distributions")
+//	delete fileTree(dir: "build/assetCompile")
+//	delete fileTree(dir: "build/distributions")
+//	delete fileTree(dir: "build/libs", exclude: "*.jar") //delete everything except jar file inside build folder
+//}
+//
+//jar { //Don't package test folders and files
+//	exclude "test/**"
+//	exclude "test/**/**"
+//}
+//
+//build.mustRunAfter clean //First clean then build to avoid cache issues etc
+//
+//gradle.taskGraph.whenReady {
+//	taskGraph ->
+//		if (taskGraph.hasTask(stage)) { //Don't run test on heroku
+//			test.enabled = false
+//		}
+//}
+//
+//bootJar { //Exclude test files when pack boot jar file
+//	enabled = true
+//	classifier = 'boot'
+//	exclude "test/**"
+//	exclude "test/**/**"
 }
 
 group = 'com.crud'
@@ -46,8 +46,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	//runtimeOnly 'mysql:mysql-connector-java'
-	runtimeOnly 'org.postgresql:postgresql'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	runtimeOnly 'mysql:mysql-connector-java'
+	//runtimeOnly 'org.postgresql:postgresql'
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 	testImplementation ('org.springframework.boot:spring-boot-starter-test') {
@@ -55,6 +56,9 @@ dependencies {
 	}
 	testCompileOnly 'org.projectlombok:lombok:1.18.22'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+	compile('io.springfox:springfox-swagger2:2.9.2')
+	compile('io.springfox:springfox-swagger-ui:2.9.2')
+
 
 //	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
