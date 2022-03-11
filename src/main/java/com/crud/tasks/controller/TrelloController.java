@@ -16,9 +16,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class TrelloController {
 
-   // private final TrelloClient trelloClient;
     private final TrelloService trelloService;
-
 
     @GetMapping(value = "getTrelloBoards")
     public List<TrelloBoardDto> getTrelloBoards() {
