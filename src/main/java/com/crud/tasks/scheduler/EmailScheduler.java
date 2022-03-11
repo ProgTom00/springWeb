@@ -22,8 +22,6 @@ public class EmailScheduler {
     public void sendInformationEmail() {
         long size = taskRepository.count();
         String countTask = (size == 1) ? "task" : "tasks";
-
-
         service.send(Mail.builder()
                 .mailTo(adminConfig.getAdminMail())
                 .subject(SUBJECT)
